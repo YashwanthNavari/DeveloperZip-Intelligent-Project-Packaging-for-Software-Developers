@@ -58,23 +58,69 @@ echo.
 echo - Pushing main branch to origin...
 git push -u origin main
 
+if %errorlevel% neq 0 goto :failed_push
+
+color 0A
+echo.
+echo [SUCCESS] Project successfully pushed to GitHub!
+echo Check it here: https://github.com/YashwanthNavari/DeveloperZip-Intelligent-Project-Packaging-for-Software-Developers
+goto :end
+
+:failed_push
+color 0E
+echo.
+echo ---------------------------------------------------
+echo [ALERT] Push failed or was rejected.
+echo.
+echo This usually happens if:
+echo 1. The remote repository already has files (e.g. README/License).
+echo 2. You are not authenticated with GitHub.
+echo.
+echo How would you like to proceed?
+echo [1] Force Push (Overwrite everything on GitHub with this local project)
+echo     - RECOMMENDED if this is a newly created repo.
+echo [2] Pull and Merge (Download remote changes and merge them)
+echo [3] Cancel / Exit
+echo ---------------------------------------------------
+set /p choice="Enter your choice (1, 2, or 3): "
+
+if "%choice%"=="1" goto :force_push
+if "%choice%"=="2" goto :pull_merge
+goto :end
+
+:force_push
+echo.
+echo - Force pushing to origin main...
+git push -u origin main --force
 if %errorlevel% neq 0 (
-    color 0E
     echo.
-    echo ---------------------------------------------------
-    echo [WARNING] The push command returned an error.
-    echo This is usually due to missing credentials or authentication.
+    echo [ERROR] Force push failed. Make sure you are authenticated with GitHub.
+) else (
+    color 0A
     echo.
-    echo Please make sure you are logged in to Git or have ssh keys setup.
-    echo You can authenticate by running: 'gh auth login' or entering credentials.
-    echo Once authenticated, run: 'git push -u origin main' manually.
-    echo ---------------------------------------------------
+    echo [SUCCESS] Force push completed successfully!
+    echo Check it here: https://github.com/YashwanthNavari/DeveloperZip-Intelligent-Project-Packaging-for-Software-Developers
+)
+goto :end
+
+:pull_merge
+echo.
+echo - Pulling remote changes with unrelated histories allowed...
+git pull origin main --allow-unrelated-histories --no-edit
+echo - Retrying push...
+git push -u origin main
+if %errorlevel% neq 0 (
+    echo.
+    echo [ERROR] Push failed after pulling changes.
 ) else (
     color 0A
     echo.
     echo [SUCCESS] Project successfully pushed to GitHub!
     echo Check it here: https://github.com/YashwanthNavari/DeveloperZip-Intelligent-Project-Packaging-for-Software-Developers
 )
+goto :end
 
+:end
 echo.
 pause
+
