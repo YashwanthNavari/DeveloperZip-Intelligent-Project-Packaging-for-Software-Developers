@@ -2,9 +2,11 @@ import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 
 const host = process.env.TAURI_DEV_HOST;
+const isGithubPages = process.env.GITHUB_PAGES === "true";
 
 // https://vitejs.dev/config/
 export default defineConfig({
+  base: isGithubPages ? "/DeveloperZip-Intelligent-Project-Packaging-for-Software-Developers/" : "/",
   plugins: [react()],
   // Vite options tailored for Tauri development and only applied in `tauri dev` or `tauri build`
   // 1. prevent vite from obscuring rust errors

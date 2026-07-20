@@ -8,12 +8,17 @@
   <img src="https://img.shields.io/badge/Rust-2021-orange?style=for-the-badge&logo=rust&logoColor=white&color=CE362C" alt="Rust Version">
   <img src="https://img.shields.io/badge/TypeScript-5.2-blue?style=for-the-badge&logo=typescript&logoColor=white&color=3178C6" alt="TypeScript Version">
   <img src="https://img.shields.io/badge/Daily_Sync-Active-brightgreen?style=for-the-badge&logo=github-actions&logoColor=white&color=2088FF" alt="Daily Sync">
+  <a href="https://YashwanthNavari.github.io/DeveloperZip-Intelligent-Project-Packaging-for-Software-Developers/">
+    <img src="https://img.shields.io/badge/Live_Web_App-Deploy-10b981?style=for-the-badge&logo=github&logoColor=white" alt="Live Web App">
+  </a>
 </p>
 
 ---
 
 <p align="center">
   <b>DeveloperZip</b> is an intelligent, high-performance project packager built for developers. Running natively as a desktop application with <b>Tauri v2</b> and <b>Rust</b>, it analyzes project directories (supporting Node.js, Rust, Python, Java, and more), automatically filters heavy, unnecessary dependency folders (like <code>node_modules</code>, <code>target</code>, <code>venv</code>), and compresses your code instantly.
+  <br><br>
+  <b>🌐 Use it instantly in the browser:</b> You can access the fully client-side web application directly at <a href="https://YashwanthNavari.github.io/DeveloperZip-Intelligent-Project-Packaging-for-Software-Developers/"><b>YashwanthNavari.github.io/DeveloperZip</b></a> to drag-and-drop or select folders and compress them without any installation!
 </p>
 
 ---
