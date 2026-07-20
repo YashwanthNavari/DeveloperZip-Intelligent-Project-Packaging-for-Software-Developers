@@ -1,0 +1,41 @@
+name: Automated Daily Commit
+
+on:
+  schedule:
+    # Runs at 00:00 UTC every day
+    - cron: '0 0 * * *'
+  workflow_dispatch: # Allows manual trigger from GitHub UI
+
+jobs:
+  commit:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+
+      - name: Update Daily Activity Log
+        run: |
+          # Create or update daily_activity.txt with current timestamp
+          echo "[Auto-Commit] $(date -u '+%Y-%m-%d %H:%M:%S UTC') - Keeping the green streak alive! 🚀" >> daily_activity.txt
+          
+          # Maintain file size (keep only the last 100 entries to prevent bloating)
+          tail -n 100 daily_activity.txt > daily_activity.tmp && mv daily_activity.tmp daily_activity.txt
+
+      - name: Commit and Push Changes
+        run: |
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          
+          # Check if there are changes to commit
+          if git diff --quiet daily_activity.txt; then
+            echo "No changes detected, skipping commit."
+          else
+            git add daily_activity.txt
+            git commit -m "chore(activity): update daily activity log [skip ci]"
+            git push origin main
+          fi
